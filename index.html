@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./styles/main.css">
   <title>Document</title>
 </head>
-<body>
+<body class="text-center">
   <nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -25,15 +25,39 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Authentication</a></li>
-            <li><a href="#">My Movies</a></li>
-            <li><a href="#">Search</a></li>
+            <li><a href="#" id="auth">Authentication</a></li>
+            <li><a href="#" id="movies">My Movies</a></li>
+            <li><a href="#" id="searchMe">Search</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
   <div class="container">
-    <div class="row">
+    <div class="row hidden" id="myMovies">
+      <div class="col-md-12" >
+        <h1>My Movies</h1>
+      </div>
+    </div>
+    <div class="row hidden" id="authScreen">
+      <div class="col-md-12" >
+        <h1>Sign In</h1>
+        <button class="btn btn-primary">Login with Google</button>
+      </div>
+    </div>
+    <div class="row" id="search">
+      <div class="col-md-12" >
+        <h1>Search Movies</h1>
+        <div class="row text-center">
+            <div class="col-lg-offset-3 col-lg-6">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">Go!</button>
+                </span>
+                <input type="text" class="form-control" placeholder="Search for...">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      </div>
     </div>
   </div>
 </body>
