@@ -2,6 +2,15 @@
 
 const dom = require('./dom');
 
+// `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${searchText}&page=1&include_adult=false`
+
+let tmdbKey = '';
+
+const setKey = (key) =>
+{
+  tmdbKey = key;
+};
+
 const singleMovie = {
   adult: false,
   backdrop_path: '/c2Ax8Rox5g6CneChwy1gmu4UbSb.jpg',
@@ -27,4 +36,5 @@ const showResults = () =>
 module.exports =
 {
   showResults,
+  setKey,
 };
