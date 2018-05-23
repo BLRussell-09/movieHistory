@@ -33,7 +33,8 @@ const pressEnter = () =>
   {
     if (e.key === 'Enter')
     {
-      tmdb.showResults('cow');
+      const searchWords = $('#searchBar').val().replace(' ', '%20');
+      tmdb.showResults(searchWords);
     }
   });
 };

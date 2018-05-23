@@ -13,8 +13,7 @@ const searchTMDB = (txt) =>
 {
   return new Promise((resolve, reject) =>
   {
-    $.ajax(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbKey}&language=en-US&query=${txt}&page=1&include_adult=false`
-    ).done((result) =>
+    $.ajax(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbKey}&language=en-US&query=${txt}&page=1&include_adult=false`).done((result) =>
     {
       resolve(result);
     }).fail((err) =>
@@ -28,7 +27,7 @@ const showResults = (searchText) =>
 {
   searchTMDB(searchText).then((result) =>
   {
-    dom.domString(result);
+    dom.domString(result.results);
   }).catch((err) =>
   {
     console.error('search error', err);
