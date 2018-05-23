@@ -1,3 +1,5 @@
+const tmdb = require('./tmdb');
+
 const myLinks = () =>
 {
   $(document).click(showShit);
@@ -11,7 +13,7 @@ const showShit = (e) =>
     $('#myMovies').addClass('hidden');
     $('#search').addClass('hidden');
   }
-  else if (e.target.id === 'movies')
+  else if (e.target.id === 'moviesNav')
   {
     $('#myMovies').removeClass('hidden');
     $('#authScreen').addClass('hidden');
@@ -25,7 +27,18 @@ const showShit = (e) =>
   }
 };
 
+const pressEnter = () =>
+{
+  tmdb.showResults();
+};
+
+const initializer = () =>
+{
+  myLinks();
+  pressEnter();
+};
+
 module.exports =
 {
-  myLinks,
+  initializer,
 };
