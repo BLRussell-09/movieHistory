@@ -1,8 +1,12 @@
 const domString = (movArr, config) =>
 {
   let domString = '';
-  movArr.forEach(element =>
+  movArr.forEach((element, index) =>
   {
+    if (index % 3 === 0)
+    {
+      domString += `<div class="row">`;
+    }
     domString += `<div class="col-sm-6 col-md-4">`;
     domString += `<div class="thumbnail">`;
     domString += `<img src="${config.base_url}/w342/${element.poster_path}" alt="Movie Poster">`;
@@ -13,7 +17,10 @@ const domString = (movArr, config) =>
     domString += `</div>`;
     domString += `</div>`;
     domString += `</div>`;
-    domString += `</div>`;
+    if (index % 3 === 2)
+    {
+      domString += `</div>`;
+    }
   });
   printToDom(domString);
 };
