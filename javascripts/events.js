@@ -77,6 +77,26 @@ const getAllMoviesEvent = () => {
     });
 };
 
+const getWatchedMoviesEvent = () => {
+  firebaseAPI.getWatchedMovies()
+    .then((moviesArray) => {
+      dom.domString(moviesArray, tmdb.getImageConfig(), 'savedMovies', true);
+    })
+    .catch((error) => {
+      console.error('error in get watched movies', error);
+    });
+};
+
+const getWishlistMoviesEvent = () => {
+  firebaseAPI.getWishlistMovies()
+    .then((moviesArray) => {
+      dom.domString(moviesArray, tmdb.getImageConfig(), 'savedMovies', true);
+    })
+    .catch((error) => {
+      console.error('error in get wishlist movies', error);
+    });
+};
+
 const deleteMovieEvent = () =>
 {
   $(document).on('click', '.deleteMovie', (e) =>
@@ -118,6 +138,29 @@ const updateMovieEvnt = () =>
   });
 };
 
+const filterEvents = () =>
+{
+  $('#filterButtons').on('click', (e) =>
+  {
+    const classList = e.target.classList;
+    if (classList.contains('wishlist'))
+    {
+      // Show only isWatched: false
+      getWishlistMoviesEvent();
+    }
+    else if (classList.contains('watched'))
+    {
+      // Show only if isWatched: true
+      getWatchedMoviesEvent();
+    }
+    else
+    {
+      // Show everything
+      getAllMoviesEvent();
+    }
+  });
+};
+
 const initializer = () =>
 {
   myLinks();
@@ -125,6 +168,7 @@ const initializer = () =>
   saveMovieToWishlistEvent();
   deleteMovieEvent();
   updateMovieEvnt();
+  filterEvents();
 };
 
 module.exports =
