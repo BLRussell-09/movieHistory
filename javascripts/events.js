@@ -2,6 +2,7 @@
 
 const tmdb = require('./tmdb');
 const firebaseAPI = require('./firebaseAPI');
+const dom = require('./dom');
 
 const myLinks = () =>
 {
@@ -21,6 +22,7 @@ const showShit = (e) =>
     $('#myMovies').removeClass('hidden');
     $('#authScreen').addClass('hidden');
     $('#search').addClass('hidden');
+    getAllMoviesEvent();
   }
   else if (e.target.id === 'searchMe')
   {
@@ -65,11 +67,37 @@ const saveMovieToWishlistEvent = () =>
   });
 };
 
+const getAllMoviesEvent = () => {
+  firebaseAPI.getAllMovies()
+    .then((moviesArray) => {
+      dom.domString(moviesArray, tmdb.getImageConfig(), 'savedMovies', true);
+    })
+    .catch((error) => {
+      console.error('error in get all movies', error);
+    });
+};
+
+const deleteMovieEvent = () =>
+{
+  $(document).on('click', '.deleteMovie', (e) =>
+  {
+    const movieToDeleteId = $(e.target).closest('.movie').data('firebaseId');
+    firebaseAPI.deleteMovieFromDb(movieToDeleteId).then(() =>
+    {
+      getAllMoviesEvent();
+    }).catch((error) =>
+    {
+      console.error(error);
+    });
+  });
+};
+
 const initializer = () =>
 {
   myLinks();
   pressEnter();
   saveMovieToWishlistEvent();
+  deleteMovieEvent();
 };
 
 module.exports =

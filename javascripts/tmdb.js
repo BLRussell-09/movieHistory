@@ -11,6 +11,10 @@ const setKey = (key) =>
   getConfig();
 };
 
+const getImageConfig = () => {
+  return imageConfig;
+};
+
 const getConfig = () =>
 {
   tmdbConfiguration().then((result) =>
@@ -65,4 +69,5 @@ module.exports =
 {
   showResults,
   setKey,
+  getImageConfig,
 };
