@@ -36,7 +36,7 @@ const pressEnter = () =>
 {
   $(document).keypress((e) =>
   {
-    if (e.key === 'Enter')
+    if (e.key === 'Enter' && !$('#search').hasClass('hidden'))
     {
       const searchWords = $('#searchBar').val().replace(' ', '%20');
       tmdb.showResults(searchWords);
@@ -161,6 +161,47 @@ const filterEvents = () =>
   });
 };
 
+const authEvents = () =>
+{
+  $('#signInButton').click((e) =>
+  {
+    e.preventDefault();
+    const email = $('#inputEmail').val();
+    const pass = $('#inputPassword').val();
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+      .then((user) => {})
+      .catch((error) => {
+        // Handle Errors here.
+        const errorMessage = error.message;
+        console.error(errorMessage);
+      });
+  });
+  $('#register-link').click((e) =>
+  {
+    $('#login-form').addClass('hidden');
+    $('#registration-form').removeClass('hidden');
+  });
+  $('#signin-link').click(() =>
+  {
+    $('#login-form').removeClass('hidden');
+    $('#registration-form').addClass('hidden');
+  });
+  $('#logout').click(() =>
+  {
+    firebase.auth().signOut().then(function () {
+      // Sign-out successful.
+      $('#auth').removeClass('hidden');
+      $('#authScreen').removeClass('hidden');
+      $('#myMovies').addClass('hidden');
+      $('#search').addClass('hidden');
+      $('#moviesNav, #searchMe, #logout').addClass('hidden');
+    }).catch(function (error) {
+      // An error happened.
+      console.error(error);
+    });
+  });
+};
+
 const initializer = () =>
 {
   myLinks();
@@ -169,9 +210,11 @@ const initializer = () =>
   deleteMovieEvent();
   updateMovieEvnt();
   filterEvents();
+  authEvents();
 };
 
 module.exports =
 {
   initializer,
+  getAllMoviesEvent,
 };

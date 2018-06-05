@@ -58,7 +58,7 @@ const showResults = (searchText) =>
 {
   searchTMDB(searchText).then((result) =>
   {
-    dom.domString(result.results, imageConfig, '#movies');
+    dom.domString(result.results, imageConfig, 'movies');
   }).catch((err) =>
   {
     console.error('search error', err);

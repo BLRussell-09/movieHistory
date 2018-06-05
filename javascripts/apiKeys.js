@@ -1,5 +1,6 @@
 const tmdb = require('./tmdb');
 const firebaseAPI = require('./firebaseAPI');
+const {checkLoginStatus,} = require('./auth');
 
 const apiKeys = () =>
 {
@@ -22,6 +23,7 @@ const retrieveKeys = () =>
     tmdb.setKey(results.tmdb.apiKey);
     firebaseAPI.setConfig(results.firebase);
     firebase.initializeApp(results.firebase);
+    checkLoginStatus();
   }).catch((err) =>
   {
     console.error('No keys', err);
