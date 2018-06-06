@@ -1,12 +1,19 @@
 let firebaseConfig = {};
+let uid = {};
 
 const setConfig = (fbConfig) =>
 {
   firebaseConfig = fbConfig;
 };
 
+const setUID = (newUID) =>
+{
+  uid = newUID;
+};
+
 const saveMovieToWishList = (newMovie) =>
 {
+  newMovie.uid = uid;
   return new Promise((resolve, reject) =>
   {
     $.ajax(
@@ -28,7 +35,7 @@ const getAllMovies = () => {
     const allMoviesArray = [];
     $.ajax({
       method: 'GET',
-      url: `${firebaseConfig.databaseURL}/movies.json`,
+      url: `${firebaseConfig.databaseURL}/movies.json?orderBy="uid"&equalTo="${uid}"`,
     })
       .done((allMoviesObj) => {
         if (allMoviesObj !== null) {
@@ -50,13 +57,16 @@ const getWatchedMovies = () => {
     const allMoviesArray = [];
     $.ajax({
       method: 'GET',
-      url: `${firebaseConfig.databaseURL}/movies.json?orderBy="isWatched"&equalTo=true`,
+      url: `${firebaseConfig.databaseURL}/movies.json?orderBy="uid"&equalTo="${uid}"`,
     })
       .done((allMoviesObj) => {
         if (allMoviesObj !== null) {
           Object.keys(allMoviesObj).forEach((fbKey) => {
-            allMoviesObj[fbKey].id = fbKey;
-            allMoviesArray.push(allMoviesObj[fbKey]);
+            if (allMoviesObj[fbKey].isWatched)
+            {
+              allMoviesObj[fbKey].id = fbKey;
+              allMoviesArray.push(allMoviesObj[fbKey]);
+            }
           });
         }
         resolve(allMoviesArray);
@@ -72,13 +82,16 @@ const getWishlistMovies = () => {
     const allMoviesArray = [];
     $.ajax({
       method: 'GET',
-      url: `${firebaseConfig.databaseURL}/movies.json?orderBy="isWatched"&equalTo=false`,
+      url: `${firebaseConfig.databaseURL}/movies.json?orderBy="uid"&equalTo="${uid}"`,
     })
       .done((allMoviesObj) => {
         if (allMoviesObj !== null) {
           Object.keys(allMoviesObj).forEach((fbKey) => {
-            allMoviesObj[fbKey].id = fbKey;
-            allMoviesArray.push(allMoviesObj[fbKey]);
+            if (!allMoviesObj[fbKey].isWatched)
+            {
+              allMoviesObj[fbKey].id = fbKey;
+              allMoviesArray.push(allMoviesObj[fbKey]);
+            }
           });
         }
         resolve(allMoviesArray);
@@ -109,6 +122,7 @@ const deleteMovieFromDb = (movieId) =>
 
 const updateMovieToWatched = (updatedMovie, movieId) =>
 {
+  updatedMovie.uid = uid;
   return new Promise ((resolve, reject) =>
   {
     $.ajax(
@@ -129,6 +143,7 @@ const updateMovieToWatched = (updatedMovie, movieId) =>
 };
 
 module.exports = {
+  setUID,
   setConfig,
   saveMovieToWishList,
   getAllMovies,
