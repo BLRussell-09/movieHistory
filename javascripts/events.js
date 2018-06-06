@@ -172,8 +172,9 @@ const authEvents = () =>
       .then((user) => {})
       .catch((error) => {
         // Handle Errors here.
-        const errorMessage = error.message;
-        console.error(errorMessage);
+        $('#signin-error-msg').text(error.message);
+        $('#signin-error').removeClass('hidden');
+        console.error(error.message);
       });
   });
   $('#registerButton').click(() =>
@@ -182,8 +183,9 @@ const authEvents = () =>
     const pass = $('#registerPassword').val();
     firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function (error) {
       // Handle Errors here.
-      const errorMessage = error.message;
-      console.error(errorMessage);
+      $('#register-error-msg').text(error.message);
+      $('#register-error').removeClass('hidden');
+      console.error(error.message);
       // ...
     });
   });
